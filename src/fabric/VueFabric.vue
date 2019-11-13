@@ -394,114 +394,117 @@ export default {
       const canvas = this.canvas;
       const that = this;
       options = options || {};
-      fabric.Image.fromURL(url, (img) => {
-        // 添加过滤器
-        // img.filters.push(new fabric.Image.filters.Grayscale());
-        // 应用过滤器并重新渲染画布执行
-        // img.applyFilters(canvas.renderAll.bind(canvas));
-        // console.log(img);
-        const maxWidth = that.width / 2;
-        let width = 0;
-        let height = 0;
-        if (img.width > img.height) {
-          if (img.width > maxWidth) {
-            width = maxWidth;
-            height = (img.height / img.width) * width;
+      return new Promise(resolve => {
+        fabric.Image.fromURL(url, (img) => {
+          // 添加过滤器
+          // img.filters.push(new fabric.Image.filters.Grayscale());
+          // 应用过滤器并重新渲染画布执行
+          // img.applyFilters(canvas.renderAll.bind(canvas));
+          // console.log(img);
+          const maxWidth = that.width / 2;
+          let width = 0;
+          let height = 0;
+          if (img.width > img.height) {
+            if (img.width > maxWidth) {
+              width = maxWidth;
+              height = (img.height / img.width) * width;
+            } else {
+              width = img.width;
+              height = img.height;
+            }
+          } else if (img.height > maxWidth) {
+            height = maxWidth;
+            width = (img.width / img.height) * height;
           } else {
             width = img.width;
             height = img.height;
           }
-        } else if (img.height > maxWidth) {
-          height = maxWidth;
-          width = (img.width / img.height) * height;
-        } else {
-          width = img.width;
-          height = img.height;
-        }
-        if (options && options.width) {
-          width = options.width;
-        }
-        if (options && options.height) {
-          height = options.height;
-        }
-        let leftP = that.width / 2;
-        let topP = that.height / 2;
-        if (options && options.left) {
-          leftP = options.left;
-        }
-        if (options && options.top) {
-          topP = options.top;
-        }
-        img.set({
-          id: options.id ? options.id : 'image',
-          left: leftP,
-          top: topP,
-          scaleX: width / img.width,
-          scaleY: height / img.height,
-          originX: 'center',
-          originY: 'center',
-          cornerStrokeColor: 'blue'
-        });
+          if (options && options.width) {
+            width = options.width;
+          }
+          if (options && options.height) {
+            height = options.height;
+          }
+          let leftP = that.width / 2;
+          let topP = that.height / 2;
+          if (options && options.left) {
+            leftP = options.left;
+          }
+          if (options && options.top) {
+            topP = options.top;
+          }
+          img.set({
+            id: options.id ? options.id : 'image',
+            left: leftP,
+            top: topP,
+            scaleX: width / img.width,
+            scaleY: height / img.height,
+            originX: 'center',
+            originY: 'center',
+            cornerStrokeColor: 'blue'
+          });
 
-        // const oldOriginX = img.get('originX');
-        // const oldOriginY = img.get('originY');
-        // const center = img.getCenterPoint();
-        img.hasControls = true;
-        img.hasBorders = true;
-        // img.customiseCornerIcons(
-        //   {
-        //     settings: {
-        //       borderColor: '#b4b4b4',
-        //       cornerSize: 20,
-        //       cornerBackgroundColor: '#FF0000',
-        //       cornerShape: 'circle',
-        //       cornerPadding: 0
-        //     }
-        //     tl: {
-        //       icon: dotCircleImg
-        //     },
-        //     tr: {
-        //       icon: dotCircleImg
-        //     },
-        //     bl: {
-        //       icon: dotCircleImg
-        //     },
-        //     br: {
-        //       icon: dotCircleImg
-        //     },
-        //     mb: {
-        //       icon: dotCircleImg
-        //     },
-        //     mt: {
-        //       icon: dotCircleImg
-        //     },
-        //     mr: {
-        //       icon: dotCircleImg
-        //     },
-        //     mtr: {
-        //       icon: dotCircleImg
-        //     }
-        //   },
-        //   function () {
-        //     canvas.renderAll();
-        //   }
-        // );
-        // img.setControlsVisibility({
-        //   bl: true,
-        //   br: true,
-        //   mb: false,
-        //   ml: true,
-        //   mr: true,
-        //   mt: false,
-        //   mtr: true,
-        //   tl: true,
-        //   tr: true
-        // });
-        canvas.add(img); // 把图片添加到画布上
-        if (options && options.registeObjectEvent) {
-          Utils.registeObjectEvent(that, img);
-        }
-        canvas.renderAll.bind(canvas);
+          // const oldOriginX = img.get('originX');
+          // const oldOriginY = img.get('originY');
+          // const center = img.getCenterPoint();
+          img.hasControls = true;
+          img.hasBorders = true;
+          // img.customiseCornerIcons(
+          //   {
+          //     settings: {
+          //       borderColor: '#b4b4b4',
+          //       cornerSize: 20,
+          //       cornerBackgroundColor: '#FF0000',
+          //       cornerShape: 'circle',
+          //       cornerPadding: 0
+          //     }
+          //     tl: {
+          //       icon: dotCircleImg
+          //     },
+          //     tr: {
+          //       icon: dotCircleImg
+          //     },
+          //     bl: {
+          //       icon: dotCircleImg
+          //     },
+          //     br: {
+          //       icon: dotCircleImg
+          //     },
+          //     mb: {
+          //       icon: dotCircleImg
+          //     },
+          //     mt: {
+          //       icon: dotCircleImg
+          //     },
+          //     mr: {
+          //       icon: dotCircleImg
+          //     },
+          //     mtr: {
+          //       icon: dotCircleImg
+          //     }
+          //   },
+          //   function () {
+          //     canvas.renderAll();
+          //   }
+          // );
+          // img.setControlsVisibility({
+          //   bl: true,
+          //   br: true,
+          //   mb: false,
+          //   ml: true,
+          //   mr: true,
+          //   mt: false,
+          //   mtr: true,
+          //   tl: true,
+          //   tr: true
+          // });
+          canvas.add(img); // 把图片添加到画布上
+          if (options && options.registeObjectEvent) {
+            Utils.registeObjectEvent(that, img);
+          }
+          canvas.renderAll.bind(canvas);
+          resolve(img);
+        });
       });
     },
     toJson() {
