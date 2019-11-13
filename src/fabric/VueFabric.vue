@@ -447,8 +447,8 @@ export default {
           // const oldOriginX = img.get('originX');
           // const oldOriginY = img.get('originY');
           // const center = img.getCenterPoint();
-          img.hasControls = true;
-          img.hasBorders = true;
+          img.hasControls = false;
+          img.hasBorders = false;
           // img.customiseCornerIcons(
           //   {
           //     settings: {
